@@ -9,10 +9,12 @@ import AlertTitle from '@mui/material/AlertTitle';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const LoginPage = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [loginData, setLoginData] = useState({
+        email: '',
+        password: '',
+    });
     const [rememberMe, setRememberMe] = useState(false);
-    const [isOrg, setIsOrg] = useState(false); // Toggle between participant and organization
+    const [isOrg, setIsOrg] = useState(false);
     const navigate = useNavigate();
 
     const [alertOpen, setAlertOpen] = useState(false);
@@ -22,64 +24,78 @@ const LoginPage = () => {
         message: '',
     });
 
-    const handleFormSubmit = async () => {
-        try {
-            const response = await axios.post('http://localhost:8080/login', {
-                email,
-                password,
-                rememberMe,
-                isOrg, // Send whether the user is an organization
-            });
+    const [errors, setErrors] = useState({
+        email: false,
+        password: false,
+    });
 
-            if (response.data.success) {
-                // alert('Login successful');
-                let count = 3;
+    const validateEmail = (email) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    };
+
+    const validateForm = () => {
+        let hasError = false;
+        const newErrors = { ...errors };
+
+        if (!loginData.email || !validateEmail(loginData.email)) {
+            newErrors.email = true;
+            hasError = true;
+        }
+        if (!loginData.password) {
+            newErrors.password = true;
+            hasError = true;
+        }
+
+        setErrors(newErrors);
+        return !hasError;
+    };
+
+    const resetData = () => {
+        setLoginData({
+            email: '',
+            password: '',
+            rememberMe: false,
+            isOrg: false,
+        });
+    };
+
+    const handleSuccessResponse = (res) => {
+        let count = 3;
+        setAlertMessage({
+            type: 'success',
+            heading: 'Success',
+            message: `${res.data.message} Redirecting in ${count}`,
+        });
+        setAlertOpen(true);
+
+        let t1 = setInterval(() => {
+            if (count > 0) {
+                count--;
                 setAlertMessage({
                     type: 'success',
                     heading: 'Success',
-                    message: `Login successful. Redirecting in ${count}`,
+                    message: `${res.data.message} Redirecting in ${count}`,
                 });
-                setAlertOpen(true);
-
-                let t1 = setInterval(() => {
-                    if (count > 0) {
-                        count--;
-                        setAlertMessage({
-                            type: 'success',
-                            heading: 'Success',
-                            message: `Login successful. Redirecting in ${count}`,
-                        });
-                    } else {
-                        clearTimeout(t1);
-                        // console.log('Done');
-                        navigate('/');
-                    }
-                }, 1000);
-
-                // Redirect to dashboard or homepage
-                // window.location.href = response.data.redirectUrl;
             } else {
-                // alert('Invalid credentials');
-                setAlertMessage({
-                    type: 'error',
-                    heading: 'Error',
-                    message: 'Invalid credentials',
-                });
-                setAlertOpen(true);
+                clearTimeout(t1);
+                navigate('/');
             }
-        } catch (error) {
-            console.error(
-                'Error logging in:',
-                error.response?.data || error.message
-            );
-            // alert('Login failed. Please try again.');
-            setAlertMessage({
-                type: 'error',
-                heading: 'Error',
-                message: 'Login failed. Please try again.',
-            });
-            setAlertOpen(true);
-        }
+        }, 1000);
+
+        resetData();
+    };
+
+    const handleFailedResponse = (error) => {
+        setAlertMessage({
+            type: 'error',
+            heading: 'Error',
+            message:
+                error.response?.data.message ||
+                'Login failed. Please try again.',
+        });
+        setAlertOpen(true);
+        resetData();
     };
 
     const handleAlertToggle = () => {
@@ -93,6 +109,38 @@ const LoginPage = () => {
             },
         },
     });
+
+    const handleLoginDataChange = (e) => {
+        setLoginData({
+            ...loginData,
+            [e.target.name]: e.target.value,
+        });
+        setErrors({ ...errors, [e.target.name]: false });
+    };
+
+    const onSubmit = async (e) => {
+        e.preventDefault();
+
+        // Validate form before submission
+        if (!validateForm()) return;
+
+        try {
+            const response = await axios.post('http://localhost:8080/login', {
+                ...loginData,
+                rememberMe,
+                isOrg,
+            });
+
+            if (response.data.success) {
+                handleSuccessResponse(response);
+            } else {
+                console.log(response.data);
+                handleFailedResponse();
+            }
+        } catch (error) {
+            handleFailedResponse(error);
+        }
+    };
 
     return (
         <ThemeProvider theme={theme}>
@@ -113,20 +161,30 @@ const LoginPage = () => {
                             <TextField
                                 type="email"
                                 id="email"
+                                name="email"
                                 label="Email"
                                 variant="outlined"
                                 required
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
+                                value={loginData.email || ''}
+                                onChange={(e) => handleLoginDataChange(e)}
+                                error={!!errors.email}
+                                helperText={
+                                    errors.email ? 'Email is invalid!' : ''
+                                }
                             />
                             <TextField
                                 type="password"
                                 id="password"
+                                name="password"
                                 label="Password"
                                 variant="outlined"
                                 required
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
+                                value={loginData.password || ''}
+                                onChange={(e) => handleLoginDataChange(e)}
+                                error={!!errors.password}
+                                helperText={
+                                    errors.password ? 'Password is invalid' : ''
+                                }
                             />
                         </Box>
                         <div className="w-full h-auto flex justify-between items-center flex-row mb-6">
@@ -136,13 +194,13 @@ const LoginPage = () => {
                                     name="remember_me"
                                     id="remember_me"
                                     checked={rememberMe}
-                                    onChange={() => setRememberMe(!rememberMe)}
+                                    onChange={(e) => setRememberMe(!rememberMe)}
                                     className="mr-2 w-4"
                                 />
                                 <h1 className="font-medium">Remember Me</h1>
                             </div>
 
-                            <Link className="font-medium">
+                            <Link to={'/login'} className="font-medium">
                                 Forgot Password?
                             </Link>
                         </div>
@@ -156,7 +214,7 @@ const LoginPage = () => {
                                         ? 'bg-[#4F1ABE] text-white'
                                         : 'bg-[#E0E0E0] text-[#4F1ABE] hover:bg-[#C5C5C5]'
                                 }`}
-                                onClick={() => setIsOrg(false)}
+                                onClick={(e) => setIsOrg(false)}
                             >
                                 Participant
                             </button>
@@ -167,7 +225,7 @@ const LoginPage = () => {
                                         ? 'bg-[#4F1ABE] text-white'
                                         : 'bg-[#E0E0E0] text-[#4F1ABE] hover:bg-[#C5C5C5]'
                                 }`}
-                                onClick={() => setIsOrg(true)}
+                                onClick={(e) => setIsOrg(true)}
                             >
                                 Organization
                             </button>
@@ -176,7 +234,7 @@ const LoginPage = () => {
                         <button
                             type="button"
                             className="py-2 px-24 bg-[#4F1ABE] text-white flex justify-center items-center rounded-md m-auto mb-4 text-sm md:text-base hover:bg-[#3E1399] transition-all duration-300"
-                            onClick={handleFormSubmit}
+                            onClick={onSubmit}
                         >
                             Log In
                         </button>

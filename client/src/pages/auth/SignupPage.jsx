@@ -27,7 +27,7 @@ const theme = createTheme({
     },
 });
 
-const ParticipantForm = ({ participantData, handleChange }) => {
+const ParticipantForm = ({ participantData, handleChange, errors }) => {
     return (
         <ThemeProvider theme={theme}>
             <Box
@@ -46,8 +46,10 @@ const ParticipantForm = ({ participantData, handleChange }) => {
                     variant="outlined"
                     required
                     name="username"
-                    value={participantData.username}
-                    onChange={handleChange}
+                    value={participantData.username || ''}
+                    onChange={(e) => handleChange(e)}
+                    error={!!errors.username}
+                    helperText={errors.username ? 'Username is invalid!' : ''}
                 />
                 <TextField
                     type="email"
@@ -56,8 +58,10 @@ const ParticipantForm = ({ participantData, handleChange }) => {
                     variant="outlined"
                     required
                     name="email"
-                    value={participantData.email}
-                    onChange={handleChange}
+                    value={participantData.email || ''}
+                    onChange={(e) => handleChange(e)}
+                    error={!!errors.email}
+                    helperText={errors.email ? 'Email is invalid!' : ''}
                 />
                 <TextField
                     type="text"
@@ -66,8 +70,10 @@ const ParticipantForm = ({ participantData, handleChange }) => {
                     variant="outlined"
                     required
                     name="phone"
-                    value={participantData.phone}
-                    onChange={handleChange}
+                    value={participantData.phone || ''}
+                    onChange={(e) => handleChange(e)}
+                    error={!!errors.phone}
+                    helperText={errors.phone ? 'Phone number is invalid!' : ''}
                 />
                 <TextField
                     type="password"
@@ -77,8 +83,10 @@ const ParticipantForm = ({ participantData, handleChange }) => {
                     color="primary"
                     required
                     name="password"
-                    value={participantData.password}
-                    onChange={handleChange}
+                    value={participantData.password || ''}
+                    onChange={(e) => handleChange(e)}
+                    error={!!errors.password}
+                    helperText={errors.password ? 'Password is invalid' : ''}
                 />
             </Box>
         </ThemeProvider>
@@ -142,7 +150,7 @@ const ParticipantSecondForm = ({ preferencesData, handleChange }) => {
     );
 };
 
-const OrganizationForm = ({ orgData, handleChange }) => {
+const OrganizationForm = ({ orgData, handleChange, errors }) => {
     return (
         <ThemeProvider theme={theme}>
             <Box
@@ -161,8 +169,14 @@ const OrganizationForm = ({ orgData, handleChange }) => {
                     variant="outlined"
                     required
                     name="name_of_org"
-                    value={orgData.name_of_org}
-                    onChange={handleChange}
+                    value={orgData.name_of_org || ''}
+                    onChange={(e) => handleChange(e)}
+                    error={!!errors.name_of_org}
+                    helperText={
+                        errors.name_of_org
+                            ? 'Please enter a valid organization name.'
+                            : ''
+                    }
                 />
                 <TextField
                     type="email"
@@ -171,8 +185,12 @@ const OrganizationForm = ({ orgData, handleChange }) => {
                     variant="outlined"
                     required
                     name="email_of_org"
-                    value={orgData.email_of_org}
-                    onChange={handleChange}
+                    value={orgData.email_of_org || ''}
+                    onChange={(e) => handleChange(e)}
+                    error={!!errors.email_of_org}
+                    helperText={
+                        errors.email_of_org ? 'Please enter a valid email.' : ''
+                    }
                 />
                 <TextField
                     type="text"
@@ -181,8 +199,14 @@ const OrganizationForm = ({ orgData, handleChange }) => {
                     variant="outlined"
                     required
                     name="phone_number_of_org"
-                    value={orgData.phone_number_of_org}
-                    onChange={handleChange}
+                    value={orgData.phone_number_of_org || ''}
+                    onChange={(e) => handleChange(e)}
+                    error={!!errors.phone_number_of_org}
+                    helperText={
+                        errors.phone_number_of_org
+                            ? 'Please enter a valid phone number.'
+                            : ''
+                    }
                 />
                 <TextField
                     type="password"
@@ -191,8 +215,14 @@ const OrganizationForm = ({ orgData, handleChange }) => {
                     variant="outlined"
                     required
                     name="password_of_org"
-                    value={orgData.password_of_org}
-                    onChange={handleChange}
+                    value={orgData.password_of_org || ''}
+                    onChange={(e) => handleChange(e)}
+                    error={!!errors.password_of_org}
+                    helperText={
+                        errors.password_of_org
+                            ? 'Please enter a valid password.'
+                            : ''
+                    }
                 />
                 <TextField
                     type="text"
@@ -201,8 +231,12 @@ const OrganizationForm = ({ orgData, handleChange }) => {
                     variant="outlined"
                     required
                     name="url_of_org"
-                    value={orgData.url_of_org}
-                    onChange={handleChange}
+                    value={orgData.url_of_org || ''}
+                    onChange={(e) => handleChange(e)}
+                    error={!!errors.url_of_org}
+                    helperText={
+                        errors.url_of_org ? 'Please enter a valid URL.' : ''
+                    }
                 />
                 <TextField
                     type="text"
@@ -213,8 +247,14 @@ const OrganizationForm = ({ orgData, handleChange }) => {
                     maxRows={2}
                     required
                     name="description_of_org"
-                    value={orgData.description_of_org}
-                    onChange={handleChange}
+                    value={orgData.description_of_org || ''}
+                    onChange={(e) => handleChange(e)}
+                    error={!!errors.description_of_org}
+                    helperText={
+                        errors.description_of_org
+                            ? 'Please enter a valid description.'
+                            : ''
+                    }
                 />
             </Box>
         </ThemeProvider>
@@ -239,7 +279,6 @@ const MainForm = () => {
         phone: '',
         password: '',
     });
-
     const [preferencesData, setPreferencesData] = useState([]);
     const [orgData, setOrgData] = useState({
         name_of_org: '',
@@ -248,6 +287,19 @@ const MainForm = () => {
         password_of_org: '',
         url_of_org: '',
         description_of_org: '',
+    });
+
+    const [errors, setErrors] = useState({
+        username: false,
+        email: false,
+        phone: false,
+        password: false,
+        name_of_org: false,
+        email_of_org: false,
+        phone_number_of_org: false,
+        password_of_org: false,
+        url_of_org: false,
+        description_of_org: false,
     });
 
     const handleAlertToggle = () => {
@@ -259,6 +311,7 @@ const MainForm = () => {
             ...participantData,
             [e.target.name]: e.target.value,
         });
+        setErrors({ ...errors, [e.target.name]: false });
     };
 
     const handlePreferencesChange = (e) => {
@@ -270,17 +323,14 @@ const MainForm = () => {
             ...orgData,
             [e.target.name]: e.target.value,
         });
+        setErrors({ ...errors, [e.target.name]: false });
     };
 
     const onFormTypeChange = () => {
         setOrg(!isOrg);
         setAlertOpen(false);
-        resetData();
-    };
-
-    const resetData = () => {
         setParticipantData({
-            username: '',
+            name: '',
             email: '',
             phone: '',
             password: '',
@@ -295,8 +345,90 @@ const MainForm = () => {
         });
     };
 
+    const resetData = () => {
+        setParticipantSecondForm(false);
+        setPreferencesData([]);
+        setParticipantData({
+            name: '',
+            email: '',
+            phone: '',
+            password: '',
+        });
+        setOrgData({
+            name_of_org: '',
+            email_of_org: '',
+            phone_number_of_org: '',
+            password_of_org: '',
+            url_of_org: '',
+            description_of_org: '',
+        });
+    };
+
+    const validateEmail = (email) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    };
+
+    const validateForm = () => {
+        let hasError = false;
+        const newErrors = { ...errors };
+
+        if (isOrg) {
+            if (!orgData.name_of_org) {
+                newErrors.name_of_org = true;
+                hasError = true;
+            }
+            if (!orgData.email_of_org || !validateEmail(orgData.email_of_org)) {
+                newErrors.email_of_org = true;
+                hasError = true;
+            }
+            if (!orgData.phone_number_of_org) {
+                newErrors.phone_number_of_org = true;
+                hasError = true;
+            }
+            if (!orgData.password_of_org) {
+                newErrors.password_of_org = true;
+                hasError = true;
+            }
+            if (!orgData.url_of_org) {
+                newErrors.url_of_org = true;
+                hasError = true;
+            }
+            if (!orgData.description_of_org) {
+                newErrors.description_of_org = true;
+                hasError = true;
+            }
+        } else {
+            if (!participantData.username) {
+                newErrors.username = true;
+                hasError = true;
+            }
+            if (
+                !participantData.email ||
+                !validateEmail(participantData.email)
+            ) {
+                newErrors.email = true;
+                hasError = true;
+            }
+            if (!participantData.phone) {
+                newErrors.phone = true;
+                hasError = true;
+            }
+            if (!participantData.password) {
+                newErrors.password = true;
+                hasError = true;
+            }
+        }
+        setErrors(newErrors);
+        return !hasError;
+    };
+
     const onSubmit = async (e) => {
         e.preventDefault();
+
+        // Validate form before submission
+        if (!validateForm()) return;
+
         try {
             if (isOrg) {
                 const response = await axios.post(
@@ -306,75 +438,59 @@ const MainForm = () => {
                         isOrg: true,
                     }
                 );
-
-                let count = 3;
-                setAlertMessage({
-                    type: 'success',
-                    heading: 'Success',
-                    message: `Signup successful. Redirecting in ${count}...`,
-                });
-                setAlertOpen(true);
-
-                let t1 = setInterval(() => {
-                    if (count > 0) {
-                        count--;
-                        setAlertMessage((prevState) => ({
-                            ...prevState,
-                            message: `Signup successful. Redirecting in ${count}...`,
-                        }));
-                    } else {
-                        clearInterval(t1);
-                        navigate('/');
-                    }
-                }, 1000);
-
-                resetData();
+                handleSuccessResponse(response);
             } else {
                 if (isParticipantSecondForm) {
                     const response = await axios.post(
                         'http://localhost:8080/signup',
                         participantData
                     );
-
-                    let count = 3;
-                    setAlertMessage({
-                        type: 'success',
-                        heading: 'Success',
-                        message: `Signup successful. Redirecting in ${count}...`,
-                    });
-                    setAlertOpen(true);
-
-                    let t1 = setInterval(() => {
-                        if (count > 0) {
-                            count--;
-                            setAlertMessage((prevState) => ({
-                                ...prevState,
-                                message: `Signup successful. Redirecting in ${count}...`,
-                            }));
-                        } else {
-                            clearInterval(t1);
-                            navigate('/');
-                        }
-                    }, 1000);
-
-                    resetData();
+                    handleSuccessResponse(response);
                 } else {
                     setParticipantSecondForm(true);
                 }
             }
         } catch (error) {
-            console.error(
-                'Error submitting form:',
-                error.response?.data || error.message
-            );
-            setAlertMessage({
-                type: 'error',
-                heading: 'Error',
-                message: 'Error signing up. Please try again.',
-            });
-            setAlertOpen(true);
-            resetData();
+            handleFailedResponse(error);
         }
+    };
+
+    const handleSuccessResponse = (res) => {
+        let count = 3;
+        setAlertMessage({
+            type: 'success',
+            heading: 'Success',
+            message: `${res.data.message} Redirecting in ${count}`,
+        });
+        setAlertOpen(true);
+
+        let t1 = setInterval(() => {
+            if (count > 0) {
+                count--;
+                setAlertMessage({
+                    type: 'success',
+                    heading: 'Success',
+                    message: `${res.data.message} Redirecting in ${count}`,
+                });
+            } else {
+                clearTimeout(t1);
+                navigate('/');
+            }
+        }, 1000);
+
+        resetData();
+    };
+
+    const handleFailedResponse = (error) => {
+        setAlertMessage({
+            type: 'error',
+            heading: 'Error',
+            message:
+                error.response?.data.message ||
+                'Signup failed. Please try again.',
+        });
+        setAlertOpen(true);
+        resetData();
     };
 
     return (
@@ -413,6 +529,7 @@ const MainForm = () => {
                         <ParticipantForm
                             participantData={participantData}
                             handleChange={handleParticipantChange}
+                            errors={errors}
                         />
                     ) : (
                         <ParticipantSecondForm
@@ -424,6 +541,7 @@ const MainForm = () => {
                     <OrganizationForm
                         orgData={orgData}
                         handleChange={handleOrgChange}
+                        errors={errors}
                     />
                 )}
                 <button
@@ -452,7 +570,9 @@ const MainForm = () => {
                         {alertMessage.message}
                     </Alert>
                 </div>
-            ) : null}
+            ) : (
+                ''
+            )}
         </>
     );
 };
@@ -460,7 +580,7 @@ const MainForm = () => {
 const SignupPage = () => {
     return (
         <div className="w-screen min-h-screen h-auto flex flex-col justify-center items-center bg-[#4F1ABE]">
-            <form className="w-11/12 sm:w-4/5 md:w-3/6 xl:w-2/6 h-auto flex bg-white rounded-lg flex-col justify-center items-center px-4 md:px-8">
+            <form className="w-11/12 sm:w-3/5 md:w-3/5 lg:w-2/4 h-auto flex bg-white rounded-lg flex-col justify-center items-center px-4 md:px-8 my-4">
                 <MainForm />
             </form>
         </div>
