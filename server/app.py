@@ -11,7 +11,7 @@ app.secret_key = '850b3b565f68f1ce23a200e28f38b5ec'
 # Database connection parameters
 db_params = {
     'user': 'root',
-    'passwd': '1234',
+    'passwd': '',
     'host': 'localhost',
     'port': 3306,
     'db': 'course_data'

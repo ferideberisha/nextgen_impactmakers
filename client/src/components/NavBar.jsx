@@ -132,7 +132,13 @@ const NavBar = ({ theme }) => {
                 className="w-full h-20 flex justify-center items-center fixed top-0 left-0 z-50"
                 style={
                     theme == 'primary'
-                        ? { backgroundColor: '#4F1ABE', color: 'white' }
+                    ? {
+                        backgroundImage: 'url(/assets/nav.png)', // Replace with your image path
+                        backgroundSize: 'cover', // or 'contain' depending on your needs
+                        backgroundPosition: 'center',
+                        backgroundRepeat: 'no-repeat',
+                        color: 'white'
+                    }
                         : { backgroundColor: '#ffffff', color: 'black' }
                 }
             >

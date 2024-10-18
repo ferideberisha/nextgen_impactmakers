@@ -3,18 +3,20 @@ import SwiperCarousel from '../components/SwiperCarousel';
 
 const FirstPart = () => {
     return (
-        <div className="w-full h-screen flex flex-col justify-center items-center bg-[#4F1ABE]">
-            <div className="w-full min-h-svh items-center flex flex-col bg-[#4F1ABE] relative top-[20%] mb-20 ">
+        <div className="w-full h-screen flex flex-col justify-center items-center bg-[url('../assets/Group.png')] bg-cover bg-left-20">
+            
+            <div className="w-full min-h-svh items-center flex flex-col relative top-[20%] mb-20 ">
                 <div className="flex flex-row ">
-                    <img
-                        src="../assets/Group 703.png"
-                        className="w-40 h-20 mb-5 -mr-10"
-                    />
-                    <h1 className="text-4xl text-white mb-8 ml-24 mr-64 font-bold  ">
+                <img
+                src="../assets/Group 703.png"
+                alt="Decorative Image"
+                className="w-25 h-20 mb-10 object-cover opacity-100" 
+            />
+                    <h1 className="text-4xl text-white mb-8 ml-24 mr-40 font-bold  ">
                         Opportunities In One!
                     </h1>
                 </div>
-                <div className="">
+                <div className="mb-20">
                     <select
                         className="mr-5 border border-gray-300 rounded px-20 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         name="select-category"
@@ -35,8 +37,17 @@ const FirstPart = () => {
                     >
                         Search
                     </button>
+
                 </div>
                 <SwiperCarousel />
+                
+            </div>
+            <div className="absolute bottom-0 right-0 m-5">
+                <img
+                    src="../assets/image 1.png" 
+                    alt="chatbot"
+                    className="w-25 h-25 object-cover "
+                />
             </div>
         </div>
     );
@@ -44,63 +55,15 @@ const FirstPart = () => {
 
 const SecondPart = () => {
     return (
-        <div className="relative w-full h-screen ">
-            <img
-                src="../assets/Group 749.png"
-                alt="Background Decorative Image"
-                className="absolute inset-36 w-full h-full object-cover"
-            />
+        <div className="bg-[#4F1ABE] text-white py-32 min-h-[500px] w-full relative overflow-hidden">
+            <div className="container mx-auto text-center">
+                <h2 className="text-[48px] font-bold mb-16">About PYE</h2>
 
-            <div className="relative flex flex-col items-center justify-center h-full bg-white bg-opacity-0 py-16">
-                <h2 className="text-center text-4xl font-bold mb-16">
-                    Our Services
-                </h2>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                    <div className="flex flex-col items-center">
-                        <button className="bg-blue-400 hover:bg-blue-500 text-white font-semibold py-2 px-6 rounded-lg mb-4">
-                            Volunteering
-                        </button>
-                        <p className="text-center text-gray-600 px-6">
-                            Lorem ipsum dolor sit amet consectetur. Auctor
-                            vivamus sed at mauris id. Ornare tortor dis
-                            vestibulum ac nibh.
-                        </p>
-                    </div>
 
-                    <div className="flex flex-col items-center">
-                        <button className="bg-blue-400 hover:bg-blue-500 text-white font-semibold py-2 px-6 rounded-lg mb-4">
-                            Trainings
-                        </button>
-                        <p className="text-center text-gray-600 px-6">
-                            Lorem ipsum dolor sit amet consectetur. Auctor
-                            vivamus sed at mauris id. Ornare tortor dis
-                            vestibulum ac nibh.
-                        </p>
-                    </div>
-
-                    <div className="flex flex-col items-center">
-                        <button className="bg-blue-400 hover:bg-blue-500 text-white font-semibold py-2 px-6 rounded-lg mb-4">
-                            Internships
-                        </button>
-                        <p className="text-center text-gray-600 px-6">
-                            Lorem ipsum dolor sit amet consectetur. Auctor
-                            vivamus sed at mauris id. Ornare tortor dis
-                            vestibulum ac nibh.
-                        </p>
-                    </div>
-
-                    <div className="flex flex-col items-center">
-                        <button className="bg-blue-400 hover:bg-blue-500 text-white font-semibold py-2 px-6 rounded-lg mb-4">
-                            Events
-                        </button>
-                        <p className="text-center text-gray-600 px-6">
-                            Lorem ipsum dolor sit amet consectetur. Auctor
-                            vivamus sed at mauris id. Ornare tortor dis
-                            vestibulum ac nibh.
-                        </p>
-                    </div>
-                </div>
+                <p className="text-[18px] max-w-lg mx-auto">
+                A platform aimedlimed at providing a trustful source of all Events, trainings, interships, and Volunteering opportunities in Kosova
+                </p>
             </div>
         </div>
     );
@@ -108,93 +71,128 @@ const SecondPart = () => {
 
 const ThirdPart = () => {
     return (
-        <div className="bg-[#4F1ABE] text-white py-32 min-h-[500px] w-full relative overflow-hidden">
-            <div className="container mx-auto text-center">
-                <h2 className="text-[48px] font-bold mb-16">About PYE</h2>
+        <div className="relative w-full h-screen ">
+            <img
+                src="../assets/image 4.png"
+                alt="Background Decorative Image"
+                className="absolute inset-0 w-full h-full object-cover opacity-50" 
+            />
 
-                <div className="w-40 h-0.5 mx-auto bg-white mb-16"></div>
+            <div className="relative flex flex-col items-center justify-center h-full bg-white bg-opacity-0 py-16">
+                <h2 className="text-center text-4xl font-bold mb-16">
+                    Our Services
+                </h2>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-4xl mx-auto">
+    
+                <a href="/internships"> 
+                <div className="relative flex flex-col items-center group">
+                    <img
+                        src="../assets/Group 769.png" // Default image
+                        alt="internships"
+                        className="w-[400px] h-[350px] -mt-0 object-cover rounded-lg" 
+                    />
+                    <img
+                        src="../assets/image 9.png" // Hover image
+                        alt="internships Hover"
+                        className="absolute top-0 left-0 w-[400px] h-[360px] -mt-1  rounded-xl object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300" // Shown on hover
+                    />
+                </div>
+                    </a>
 
-                <p className="text-[18px] max-w-lg mx-auto">
-                    Lorem ipsum dolor sit amet consectetur. Duis odio massa
-                    viverra non viverra congue ut. Convallis ultrices orci
-                    euismod neque sit interdum. Cras laoreet sed elementum massa
-                    nulla neque. Sed elementum massa.
-                </p>
+                <a href="/trainings"> 
+                    <div className="relative flex flex-col items-center group">
+                        <img
+                        src="../assets/Group 770.png" // Default image
+                        alt="trainings"
+                        className="w-[400px] h-[350px] mb-2 object-cover rounded-lg "
+                        />
+                        <img
+                        src="../assets/image 9.png" // Hover image
+                        alt="trainings Hover"
+                        className="absolute top-0 left-0 w-[400px] h-[360px] -mt-1 object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300" // Shown on hover
+                        />
+                    </div>
+                </a>
+                <a href="/voolunteering"> 
+                <div className="relative flex flex-col items-center group">
+                    <img
+                        src="../assets/Group 771.png" // Default image
+                        alt="voolunteering"
+                        className="w-[400px] h-[350px] mb-2 object-cover rounded-lg " 
+                    />
+                    <img
+                        src="../assets/image 9.png" // Hover image
+                        alt="voolunteering Hover"
+                        className="absolute w-[400px] h-[360px] -mt-1  object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300" // Shown on hover
+                    />
+                </div>
+                </a>
+
+                <a href="/events"> 
+                <div className="relative flex flex-col items-center group">
+                    <img
+                        src="../assets/Group 772.png" // Default image
+                        alt="events"
+                        className="w-[400px] h-[350px] mb-2 object-cover rounded-lg" 
+                    />
+                    <img
+                        src="../assets/image 9.png" // Hover image
+                        alt="events Hover"
+                        className="absolute top-0 left-0 w-[400px] h-[360px] -mt-1 object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300" // Shown on hover
+                    />
+                </div>
+                </a>
+                </div>
             </div>
-            <div className="absolute bottom-0 right-0 w-32 h-48 border border-white rounded-full transform translate-x-12 translate-y-12"></div>
         </div>
     );
 };
 
 const FourthPart = () => {
     return (
-        <div className="relative w-full h-screen bg-[url('./untitled.svg')] bg-cover bg-no-repeat bg-center flex flex-col items-center justify-center">
+        <div className="relative w-full h-full">
             <img
-                src="../assets/Group 749.png"
+                src="../assets/back2.png"
                 alt="Background Decorative Image"
-                className="absolute inset-0 w-full h-full object-cover opacity-50" // Adjust opacity as needed
+                className="absolute inset-0 w-full h-full object-cover opacity-90 py-30" 
             />
 
-            <div className="relative flex flex-col items-center justify-center h-full bg-white bg-opacity-0 py-16">
+            <div className="relative flex flex-col items-center justify-center h-full bg-white bg-opacity-0 py-20">
                 {/* Title */}
-                <h2 className="text-center text-4xl font-bold mb-48">
-                    Registered
-                </h2>
+                <h1 className="text-5xl text-white text-center mb-10 font-bold  ">
+                        Registered
+                    </h1>
 
-                <div className="flex flex-nowrap justify-center gap-28 max-w-5xl mx-auto text-center overflow-x-auto">
-                    <div className="flex flex-col items-center italic ">
+                    <h2 className="text-[32px] text-white  mb-20 font-poppins font-light opacity-100">
+                        Users and Organizations
+                    </h2>
+                <div className="flex flex-nowrap justify-center mt-10 gap-80 max-w-2xl mx-auto text-center overflow-x-auto">
+                
+                    <div className=" text-white flex flex-col items-center italic ">
                         <img
-                            src="../assets/Group 715.png"
-                            alt="Students"
-                            className="w-[80px] h-[80px] mb-2" // Uniform size for all images
-                        />
-                        <p className="text-sm">Students</p>
-                    </div>
-
-                    <div className="flex flex-col items-center italic ">
-                        <img
-                            src="../assets/Group 716.png"
+                            src="../assets/Group 745.png"
                             alt="Individuals"
-                            className="w-[80px] h-[80px] mb-2" // Uniform size for all images
+                            className="w-[120px] h-[120px] mb-2" 
                         />
+                        <h1 className="text-4xl text-white text-center mt-10 mb-10 font-bold  ">
+                        50,000
+                    </h1>
                         <p className="text-sm">Individuals</p>
                     </div>
 
-                    <div className="flex flex-col items-center italic ">
-                        <img
-                            src="../assets/Group 745.png"
-                            alt="Organizations"
-                            className="w-[80px] h-[80px] mb-2" // Uniform size for all images
-                        />
-                        <p className="text-sm">Organizations</p>
-                    </div>
-
-                    <div className="flex flex-col items-center italic ">
-                        <img
-                            src="../assets/Group 714.png"
-                            alt="Companies"
-                            className="w-[80px] h-[80px] mb-2" // Uniform size for all images
-                        />
-                        <p className="text-sm">Companies</p>
-                    </div>
-
-                    <div className="flex flex-col items-center italic ">
+                    <div className=" text-white flex flex-col items-center italic ">
                         <img
                             src="../assets/Group 718.png"
-                            alt="Communities"
-                            className="w-[80px] h-[80px] mb-2" // Uniform size for all images
+                            alt="Organizations"
+                            className="w-[120px] h-[120px] mb-2" // Uniform size for all images
                         />
-                        <p className="text-sm">Communities</p>
+                        <h1 className="text-4xl text-white text-center mt-10 mb-10 font-bold  ">
+                        50,000
+                    </h1>
+                        <p className="text-sm">Organizations</p>
                     </div>
-
-                    <div className="flex flex-col items-center text-lg  italic">
-                        <img
-                            src="../assets/Group 715.png"
-                            alt="Educational Institutions"
-                            className="w-[80px] h-[80px] mb-2" // Uniform size for all images
-                        />
-                        <p className="text-sm">Educational Institutions</p>
-                    </div>
+                    
                 </div>
             </div>
         </div>
@@ -203,10 +201,9 @@ const FourthPart = () => {
 
 const FivethPart = () => {
     return (
-        <div className="w-full h-screen flex flex-col justify-center items-center bg-[#4F1ABE]">
-            <div className="w-full min-h-svh items-center flex flex-col bg-[#4F1ABE] relative top-[20%] mb-20 ">
+        <div className="w-full h-screen flex flex-col justify-center items-center bg-[url('../assets/background4.png')]">
                 <div className=" ">
-                    <h1 className="text-4xl text-white text-center mb-10 font-bold  ">
+                    <h1 className="text-4xl text-white text-center -mt-60 mb-10 font-bold  ">
                         Upcoming Opportunities
                     </h1>
 
@@ -216,7 +213,7 @@ const FivethPart = () => {
                 </div>
                 <div className=""></div>
                 <SwiperCarousel />
-            </div>
+            
         </div>
     );
 };
@@ -224,21 +221,17 @@ const FivethPart = () => {
 
 const SixthPart = () => {
     return (
-        <div className="relative w-full h-[50vh] bg-cover bg-no-repeat bg-center flex flex-col items-center justify-center">
+        <div className="text-black py-32 min-h-[500px] w-full relative overflow-hidden">           
+            <div className="container mx-auto text-center">
+            <div className="pt-[0rem] pb-[7rem] "></div>
             <img
                 src="../assets/Group 749.png"
                 alt="Background Decorative Image"
-                className="absolute inset-36 w-full h-full object-cover opacity-50"
+                className="absolute inset-0 w-full h-full object-cover opacity-50"
             />
-            <div className="relative flex flex-col items-center justify-center h-full bg-white bg-opacity-0 py-16"></div>
 
-            <div class="pt-[5rem] pb-[5rem] bg-[url('./untitled.svg')] bg-cover bg-no-repeat bg-center">
-                <div class="text-center">
-                    <div class="text-3xl font-popins font-light mb-4">
-                        Never stop growing with PYE!
-                    </div>
-                </div>
-            </div>
+            <div class="text-center text-3xl font-popins font-light z-10">Never stop growing with PYE!</div>    
+            </div>        
         </div>
     );
 };
@@ -246,11 +239,11 @@ const SixthPart = () => {
 
 const SeventhPart = () => {
     return (
-        <div class="py-16 bg-[#4F1ABE] text-white w-full h-full mt-48">
-            <div class="flex flex-col justify-center items-center py-20">
-                <div class="text-white text-5xl font-bold mb-48">Reviews</div>
+            <div className="w-full h-full flex flex-col bg-[url('../assets/background3.png')] justify-center items-center py-20">
 
-                <div class="relative w-full flex justify-center items-center -space-x-80">
+                <div className="text-white text-5xl font-bold mb-48">Reviews</div>
+
+                <div className="relative w-full flex justify-center items-center -space-x-80">
                     <div class="relative flex justify-center items-center rounded-xl bg-[#4FEAC6] w-[44rem] h-56 p-6 shadow-lg z-10">
                         <div class="absolute -top-10 left-1/2 transform -translate-x-1/2 w-20 h-20 rounded-full bg-white border-2 border-[#F6F49D]"></div>
                         <div class="text-sm md:text-base text-black">
@@ -279,7 +272,6 @@ const SeventhPart = () => {
                         </div>
                     </div>
                 </div>
-            </div>
         </div>
     );
 };
