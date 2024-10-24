@@ -1,16 +1,17 @@
 import { Link, useLocation } from 'react-router-dom';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { IoMdClose } from 'react-icons/io';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
     Box,
     List,
     ListItem,
     ListItemButton,
-    ListItemIcon,
     ListItemText,
-    Divider,
     Collapse,
+    Button,
+    Menu,
+    MenuItem,
 } from '@mui/material';
 import { MdExpandLess, MdExpandMore } from 'react-icons/md';
 import { FaCircle } from 'react-icons/fa';
@@ -31,15 +32,8 @@ const NavBar = ({ theme }) => {
     };
 
     const [categoriesOpen, setCategoriesOpen] = useState(false);
-
     const handleCategoriesClick = () => {
         setCategoriesOpen(!categoriesOpen);
-    };
-
-    const [filtersOpen, setFiltersOpen] = useState(false);
-
-    const handleFiltersClick = () => {
-        setFiltersOpen(!filtersOpen);
     };
 
     const BurgerMenu = (
@@ -126,6 +120,28 @@ const NavBar = ({ theme }) => {
         </Box>
     );
 
+    const [dropDownOpen, setDropDownOpen] = useState(false);
+
+    const toggleDropDown = () => {
+        setDropDownOpen((prev) => !prev);
+    };
+
+    // Close the dropdown if clicked outside
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            // Close dropdown if click happens outside the dropdown area
+            if (!event.target.closest('.dropdown-wrapper')) {
+                setDropDownOpen(false);
+            }
+        };
+
+        document.addEventListener('click', handleClickOutside);
+
+        return () => {
+            document.removeEventListener('click', handleClickOutside);
+        };
+    }, []);
+
     return (
         <>
             <nav
@@ -150,22 +166,76 @@ const NavBar = ({ theme }) => {
                         </Link>
                     </div>
                     <ul className="flex-row hidden sm:flex">
-                        {NAV_ITEMS.map(({ href, label }, index) => {
-                            const isActive = location.pathname === href;
+                        <li>
+                            <Link
+                                to={'/'}
+                                className={'ml-8 focus:outline-none'}
+                            >
+                                Home
+                            </Link>
+                        </li>
+                        <li className="relative dropdown-wrapper">
+                            <div
+                                onClick={toggleDropDown}
+                                className="flex flex-row items-center"
+                            >
+                                <h1 className="ml-8 focus:outline-none cursor-pointer inline mr-2">
+                                    Categories
+                                </h1>
+                                {dropDownOpen ? (
+                                    <MdExpandLess className="inline scale-150" />
+                                ) : (
+                                    <MdExpandMore className="inline scale-150" />
+                                )}
+                            </div>
 
-                            return (
-                                <li key={index}>
-                                    <Link
-                                        to={href}
-                                        className={`ml-8 focus:outline-none ${
-                                            isActive ? 'font-semibold' : ''
-                                        }`}
-                                    >
-                                        {label}
+                            <ul
+                                className={`w-48 h-auto absolute top-full left-8 bg-white text-[#4F1ABE] shadow-lg rounded-xl p-2 mt-2 transition-all duration-300 ease-in-out transform ${
+                                    dropDownOpen
+                                        ? 'opacity-100 translate-y-0'
+                                        : 'opacity-0 -translate-y-3 pointer-events-none'
+                                }`}
+                            >
+                                <li className="px-4 py-2 hover:bg-[#A3A9FE80] rounded-md">
+                                    <Link to={'/events'}>Events</Link>
+                                </li>
+                                <li className="px-4 py-2 hover:bg-[#A3A9FE80] rounded-md">
+                                    <Link to={'/trainings'}>Trainings</Link>
+                                </li>
+                                <li className="px-4 py-2 hover:bg-[#A3A9FE80] rounded-md">
+                                    <Link to={'/internships'}>Internships</Link>
+                                </li>
+                                <li className="px-4 py-2 hover:bg-[#A3A9FE80] rounded-md">
+                                    <Link to={'/volunteering'}>
+                                        Volunteering
                                     </Link>
                                 </li>
-                            );
-                        })}
+                            </ul>
+                        </li>
+                        <li>
+                            <Link
+                                to={'/login'}
+                                className={'ml-8 focus:outline-none'}
+                            >
+                                Log In
+                            </Link>
+                        </li>
+                        <li>
+                            <Link
+                                to={'/signup'}
+                                className={'ml-8 focus:outline-none'}
+                            >
+                                Sign Up
+                            </Link>
+                        </li>
+                        <li>
+                            <Link
+                                to={'/contact'}
+                                className={'ml-8 focus:outline-none'}
+                            >
+                                Contact Us
+                            </Link>
+                        </li>
                     </ul>
                     <button type="button" className="sm:hidden">
                         {!isMenuOpen ? (
